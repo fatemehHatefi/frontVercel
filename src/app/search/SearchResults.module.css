@@ -1,0 +1,26 @@
+/* src/app/search/SearchResults.module.css */
+.movieList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Match the gap with MovieList */
+  justify-content: center; /* Center items horizontally */
+  padding-top: 2%;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 400px; /* Match the height with MovieList */
+  object-fit: cover;
+}
+
+.card {
+  width: 15rem;
+  height: 25rem; /* Match the height with MovieList */
+  margin: 0.5rem; /* Match margin with MovieList */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

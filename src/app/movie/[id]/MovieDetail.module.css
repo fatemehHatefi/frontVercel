@@ -1,0 +1,23 @@
+/* src/app/movie/[id]/MovieDetail.module.css */
+
+.movieDetail {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.movieContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.movieImage {
+  width: 20%;
+  height: auto;
+  object-fit: cover;
+}
+
+.movieDescription {
+  width: 80%;
+}

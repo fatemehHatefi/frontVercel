@@ -1,0 +1,21 @@
+/* src/app/components/MovieList.module.css */
+.movieList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Adjust the gap as needed */
+    justify-content: center; /* Center the items horizontally */
+    padding-top: 2%;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 200px; /* Fixed height */
+    object-fit: cover;
+  }
+  
+  .card {
+    width: 18rem;
+    height: 25rem; /* Adjust as needed to fit your design */
+    margin: 0.5rem; /* Optional: add margin to ensure spacing */
+  }
+  

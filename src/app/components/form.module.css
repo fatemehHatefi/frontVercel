@@ -1,0 +1,54 @@
+/* src/app/components/form.module.css */
+
+.form {
+    max-width: 500px;
+    margin: auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form .form-label {
+    font-weight: bold;
+  }
+  
+  .form .form-control {
+    border-radius: 4px;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+  }
+  
+  .form .form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+  }
+  
+  .form .form-control[type="date"] {
+    padding: 0.75rem 0.75rem;
+  }
+  
+  .form .btn {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+  
