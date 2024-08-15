@@ -34,6 +34,7 @@ const LoginForm = () => {
 
         // You can use router.push for navigation
         router.push('/');
+        window.location.href = '/'; // Redirect to home page
       } else {
         console.error('Login error:', result.message);
         setErrorMessage(result.message || 'Failed to log in. Please try again.'); // Set error message

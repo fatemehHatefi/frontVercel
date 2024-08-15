@@ -1,4 +1,3 @@
-//front/src/app/components/Navbar.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,19 +12,21 @@ const Navbar = ({ setSearchTerm }) => {
   const [userName, setUserName] = useState(null);
   const router = useRouter();
   const { pathname } = router; // Get current route path
-  //let email = null;
-  //let name = null;
-  // List of categories
   const categories = ["Science Fiction & Fantasy", "Action & Adventure", "Drama & Romance", "Animation & Family"];
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const email = localStorage.getItem('userEmail');
-      const name = localStorage.getItem('userName');
-      setUserEmail(email);
-      setUserName(name);
-    }
+    // Fetch user data from localStorage and set state
+    const email = localStorage.getItem('userEmail');
+    const name = localStorage.getItem('userName');
+    setUserEmail(email);
+    setUserName(name);
   }, []);
+
+  // Reload the home page
+  const reloadHomePage = () => {
+    window.location.href = '/'; // Navigate to home page
+    window.location.reload();   // Force reload the page
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const Navbar = ({ setSearchTerm }) => {
   const handleHomeClick = () => {
     setSearchQueryState('');
     setSearchTerm('');
-    router.push('/'); // Redirect to home
+    reloadHomePage(); // Force reload the home page
   };
 
   const handleLogout = () => {
@@ -46,11 +47,10 @@ const Navbar = ({ setSearchTerm }) => {
       localStorage.removeItem('userToken');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('userName');
-  }
-   // Clear userName as well
+    }
     setUserEmail(null);
-    setUserName(null); // Clear userName state
-    router.push('/login'); // Redirect to login page after logout
+    setUserName(null);
+    reloadHomePage(); // Force reload the home page after logout
   };
 
   const handleCategorySelect = (category) => {
@@ -88,7 +88,7 @@ const Navbar = ({ setSearchTerm }) => {
               as={Link} 
               href="/visitedMovies" 
               className={`${styles.navLink} ${isActive('/visitedMovies')}`}>
-              visited Movies
+              Visited Movies
             </Nav.Link>
           )}
 

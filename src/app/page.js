@@ -20,7 +20,6 @@ export default function HomePage() {
   return (
     <div>
       <h1>Welcome to the MovieVerse</h1>
-      {userEmail && <h2>Welcome, {userEmail}</h2>}
       <MovieList searchTerm={searchTerm} />
     </div>
   );
