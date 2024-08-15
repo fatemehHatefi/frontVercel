@@ -32,7 +32,7 @@ const Watchlist = () => {
         setUser(userData);
 
         // Fetch user's watchlist movies
-        const watchlistResponse = await fetch(`http://localhost:5001/api/wishlist/view?email=${encodeURIComponent(email)}`, {
+        const watchlistResponse = await fetch(`https://backrender-pzkd.onrender.com/api/wishlist/view?email=${encodeURIComponent(email)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use consistent token handling
@@ -57,7 +57,7 @@ const Watchlist = () => {
 
   const handleRemoveFromWatchlist = async (userId, movieId) => {
     try {
-      const response = await fetch('http://localhost:5001/api/wishlist/remove', {
+      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
