@@ -25,8 +25,11 @@ const LoginForm = () => {
       const result = await response.json();
       if (response.ok) {
         console.log('Login successful:', result.token);
-        localStorage.setItem('userToken', result.token);
-        localStorage.setItem('userEmail', email);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('userToken', result.token);
+          localStorage.setItem('userEmail', email);
+      }
+      
         
         window.location.href = '/'; // Force full page reload
       } else {

@@ -10,7 +10,8 @@ const MovieSearch = () => {
   const [user, setUser] = useState(null); // Add user state
   const router = useRouter();
   const searchParams = useSearchParams(); // Access search parameters
-
+  let email = null;
+  
   useEffect(() => {
     const query = searchParams.get('query'); // Get the query parameter from the URL
     if (query) {
@@ -36,7 +37,10 @@ const MovieSearch = () => {
     // Fetch user details based on the email
     const fetchUser = async () => {
       try {
-        const email = localStorage.getItem('userEmail');
+        if (typeof window !== 'undefined') {
+          email = localStorage.getItem('userEmail');
+      }
+      
         if (email) {
           const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',

@@ -7,7 +7,11 @@ import styles from './watchlist.module.css'; // Import custom styles
 const Watchlist = () => {
   const [watchlist, setWatchlist] = useState([]);
   const [user, setUser] = useState(null);
-  const email = localStorage.getItem('userEmail'); // Retrieve the email from localStorage
+let email = null;
+
+  if (typeof window !== 'undefined') {
+    email = localStorage.getItem('userEmail');
+}
 
   useEffect(() => {
     // Fetch user details based on the email

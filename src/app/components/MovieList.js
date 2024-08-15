@@ -20,6 +20,7 @@ function MovieList() {
     // Check if running in the browser environment
     if (typeof window !== 'undefined') {
       setEmail(localStorage.getItem('userEmail'));
+    }
 
       const fetchMovies = async () => {
         try {
@@ -33,7 +34,7 @@ function MovieList() {
       };
 
       fetchMovies();
-    }
+    
   }, [currentPage]);
 
   useEffect(() => {
@@ -53,7 +54,10 @@ function MovieList() {
         }
 
         const userData = await response.json();
-        localStorage.setItem('userName', userData.username);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('userName', userData.username);
+      }
+      
         setUser(userData);
       } catch (error) {
         console.error('Error fetching user:', error);

@@ -5,11 +5,16 @@ import { useState } from 'react';
 
 const AddToWishlistButton = ({ movieId }) => {
   const [loading, setLoading] = useState(false);
-
+  let userId = null;
   const handleAddToWishlist = async () => {
     setLoading(true);
     try {
-      const userId = localStorage.getItem('userId'); // Or get from auth state
+
+      if (typeof window !== 'undefined') {
+      
+        userId = localStorage.getItem('userId');
+    }
+       // Or get from auth state
       if (!userId) throw new Error('User not logged in');
 
       await fetch('http://localhost:5001/api/wishlist/add', {

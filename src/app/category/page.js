@@ -9,7 +9,7 @@ const CategoryPage = () => {
   const category = searchParams.get('category'); // Get the query parameter from the URL
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(null); // Add user state if needed
-
+  let email = null;
   useEffect(() => {
     const fetchMovies = async () => {
       if (category) {
@@ -35,7 +35,11 @@ const CategoryPage = () => {
     // Fetch user details if needed
     const fetchUser = async () => {
       try {
-        const email = localStorage.getItem('userEmail');
+        if (typeof window !== 'undefined') {
+          email = localStorage.getItem('userEmail');
+      }
+      
+        
         if (email) {
           const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',

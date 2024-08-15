@@ -8,8 +8,10 @@ const History = () => {
   const [history, setHistory] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const email = localStorage.getItem('userEmail'); // Retrieve the email from localStorage
-
+  let email = null;
+  if (typeof window !== 'undefined') {
+    email = localStorage.getItem('userEmail');
+}
   
   useEffect(() => {
     const fetchUserHistory = async () => {

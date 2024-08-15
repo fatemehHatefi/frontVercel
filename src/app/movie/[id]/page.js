@@ -15,12 +15,6 @@ export default function MovieDetails() {
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedEmail = localStorage.getItem('userEmail');
-      setEmail(storedEmail);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchMovie = async (id) => {

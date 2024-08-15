@@ -12,13 +12,19 @@ const Navbar = ({ setSearchTerm }) => {
   const [userName, setUserName] = useState(null);
   const router = useRouter();
   const { pathname } = router; // Get current route path
-
+  let email = null;
+  let name = null;
   // List of categories
   const categories = ["Science Fiction & Fantasy", "Action & Adventure", "Drama & Romance", "Animation & Family"];
 
   useEffect(() => {
-    const email = localStorage.getItem('userEmail');
-    const name = localStorage.getItem('userName');
+    if (typeof window !== 'undefined') {
+      
+      email = localStorage.getItem('userEmail');
+      name = localStorage.getItem('userName');
+  }
+  
+    
     setUserEmail(email);
     setUserName(name);
   }, []);
@@ -38,9 +44,12 @@ const Navbar = ({ setSearchTerm }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userName'); // Clear userName as well
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userName');
+  }
+   // Clear userName as well
     setUserEmail(null);
     setUserName(null); // Clear userName state
     router.push('/login'); // Redirect to login page after logout
