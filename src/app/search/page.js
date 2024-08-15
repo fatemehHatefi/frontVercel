@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import styles from './SearchResults.module.css';
 
 const MovieSearch = () => {
@@ -125,12 +126,14 @@ const MovieSearch = () => {
             <div key={movie._id} className="card" style={{ width: '18rem' }}>
               {movie.image && (
                 <a href={`/movie/${movie._id}`}>
-                  <img 
-                    src={movie.image} 
-                    className={styles.cardImgTop} 
-                    alt={movie.title} 
-                    style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
-                  />
+                 <Image
+  src={movie.image}
+  className={styles.cardImgTop}
+  alt={movie.title}
+  width={800}    // Add the width based on your design requirements
+  height={400}   // Add the height based on your design requirements
+/>
+
                 </a>
               )}
               <div className="card-body">

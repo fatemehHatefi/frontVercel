@@ -2,6 +2,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 import styles from './MovieDetail.module.css';
 
 export default function MovieDetails() {
@@ -150,7 +151,13 @@ export default function MovieDetails() {
   return (
     <div className={styles.movieDetail}>
       <div className={styles.movieContent}>
-        {movie.image && <img src={movie.image} alt={movie.title} className={styles.movieImage} />}
+        {movie.image && <Image 
+  src={movie.image} 
+  alt={movie.title} 
+  className={styles.movieImage} 
+  width={400}   // Add the width based on the required size
+  height={600}  // Add the height based on the required size
+/>}
         <div className={styles.movieDescription}>
           <h1>{movie.title}</h1>
           <p>{movie.description}</p>

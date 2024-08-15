@@ -1,6 +1,7 @@
 //src/app/api/movies/[id].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const MovieDetail = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const MovieDetail = () => {
       <p>{movie.description}</p>
       <p>Rating: {movie.rating}</p>
       <p>Release Year: {movie.releaseYear}</p>
-      <img src={movie.image} alt={movie.title} />
+      <Image src={movie.image} alt={movie.title} />
       <p>{movie.summary}</p>
     </div>
   );

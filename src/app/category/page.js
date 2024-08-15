@@ -3,14 +3,16 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './CategoryPage.module.css'; // Import the CSS module
+import Image from 'next/image';
 
 const CategoryPage = () => {
   const searchParams = useSearchParams(); // Access search parameters
   const category = searchParams.get('category'); // Get the query parameter from the URL
   const [movies, setMovies] = useState([]);
-  const [user, setUser] = useState(null); // Add user state if needed
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
 
+  // Fetch movies based on the selected category
   useEffect(() => {
     const fetchMovies = async () => {
       if (category) {
@@ -32,6 +34,7 @@ const CategoryPage = () => {
     fetchMovies();
   }, [category]);
 
+  // Get user email from localStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedEmail = localStorage.getItem('userEmail');
@@ -39,6 +42,7 @@ const CategoryPage = () => {
     }
   }, []);
 
+  // Fetch user details based on email
   useEffect(() => {
     const fetchUser = async () => {
       if (email) {
@@ -65,6 +69,7 @@ const CategoryPage = () => {
     fetchUser();
   }, [email]);
 
+  // Handle adding a movie to the user's watchlist
   const handleAddToWatchlist = async (userId, movieId) => {
     try {
       const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
@@ -89,6 +94,7 @@ const CategoryPage = () => {
     }
   };
 
+  // Handle removing a movie from the user's watchlist
   const handleRemoveFromWatchlist = async (userId, movieId) => {
     try {
       const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/remove', {
@@ -126,12 +132,14 @@ const CategoryPage = () => {
                 <div key={movie._id} className="card" style={{ width: '18rem' }}>
                   {movie.image && (
                     <a href={`/movie/${movie._id}`}>
-                      <img 
-                        src={movie.image} 
-                        className={styles.cardImgTop} 
-                        alt={movie.title} 
-                        style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
-                      />
+                      <Image 
+  src={movie.image} 
+  className={styles.cardImgTop} 
+  alt={movie.title} 
+  width={300} // adjust this value based on your layout
+  height={400} // adjust this value based on your layout
+  style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
+/>
                     </a>
                   )}
                   <div className="card-body">

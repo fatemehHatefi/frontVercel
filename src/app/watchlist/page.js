@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './watchlist.module.css'; // Import custom styles
 
 const Watchlist = () => {
@@ -84,7 +85,13 @@ const Watchlist = () => {
           <div key={movie._id} className="card movie-item" style={{ width: '18rem' }}>
             {movie.image && (
               <Link href={`/movie/${movie._id}`}>
-                <img src={movie.image} className="card-img-top" alt={movie.title} style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} />
+ <Image
+  src={movie.image}
+  className="card-img-top"
+  alt={movie.title}
+  width={800}  // Adjust width as needed
+  height={400} // Adjust height as needed
+/>
               </Link>
             )}
             <div className="card-body">

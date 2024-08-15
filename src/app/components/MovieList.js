@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Alert } from 'react-bootstrap'; // Import Alert component
 import styles from './MovieList.module.css';
+import Image from 'next/image';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
@@ -152,7 +153,14 @@ function MovieList() {
                 <div key={movie._id} className={`${styles.movieCard} card movie-item`}>
                   {movie.image && (
                     <Link href={`/movie/${movie._id}`}>
-                      <img src={movie.image} className="card-img-top" alt={movie.title} style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} />
+                      <Image 
+  src={movie.image} 
+  className="card-img-top" 
+  alt={movie.title} 
+  width={300} // set the width to match your desired dimensions
+  height={400} // set the height to match your desired dimensions
+  style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
+/>
                     </Link>
                   )}
                   <div className="card-body">
