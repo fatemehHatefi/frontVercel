@@ -1,3 +1,18 @@
+/*****************************************************************************
+*
+WEB422 – Project
+*
+I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
+*
+No part of this assignment has been copied manually or electronically from any other source
+*
+(including web sites) or distributed to other students.
+*
+*
+Group member Names: Fatemeh Hatefi, Dhruv Sahni 
+Student IDs: 142616218, 143525228 
+Date: 08/13/2024
+*****************************************************************************/
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -25,7 +40,7 @@ function MovieList() {
 
     const fetchMovies = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/movies?page=${currentPage}&limit=4`);
+        const response = await fetch(`https://backrender-pzkd.onrender.com/movies?page=${currentPage}&limit=4`);
         const data = await response.json();
         setMovies(data.movies);
         setTotalPages(data.totalPages);

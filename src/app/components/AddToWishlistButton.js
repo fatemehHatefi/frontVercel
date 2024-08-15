@@ -1,3 +1,18 @@
+/*****************************************************************************
+*
+WEB422 – Project
+*
+I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
+*
+No part of this assignment has been copied manually or electronically from any other source
+*
+(including web sites) or distributed to other students.
+*
+*
+Group member Names: Fatemeh Hatefi, Dhruv Sahni 
+Student IDs: 142616218, 143525228 
+Date: 08/13/2024
+*****************************************************************************/
 // src/app/components/AddToWishlistButton.js
 'use client';
 
@@ -17,7 +32,7 @@ const AddToWishlistButton = ({ movieId }) => {
 
       if (!userId) throw new Error('User not logged in');
 
-      await fetch('http://localhost:5001/api/wishlist/add', {
+      await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, movieId }),

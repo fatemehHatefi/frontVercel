@@ -1,3 +1,18 @@
+/*****************************************************************************
+*
+WEB422 – Project
+*
+I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
+*
+No part of this assignment has been copied manually or electronically from any other source
+*
+(including web sites) or distributed to other students.
+*
+*
+Group member Names: Fatemeh Hatefi, Dhruv Sahni 
+Student IDs: 142616218, 143525228 
+Date: 08/13/2024
+*****************************************************************************/
 'use client';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -22,13 +37,13 @@ export default function MovieDetails() {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`http://localhost:5001/movies/${id}`);
+        const response = await axios.get(`https://backrender-pzkd.onrender.com/movies/${id}`);
         if (response.status === 200) {
           setMovie(response.data);
 
           const fetchedUserId = localStorage.getItem('userEmail');
           if (fetchedUserId) {
-            await fetch('http://localhost:5001/history', {
+            await fetch('https://backrender-pzkd.onrender.com/history', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +77,7 @@ export default function MovieDetails() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
+        const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -100,7 +115,7 @@ export default function MovieDetails() {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/wishlist/add', {
+      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +139,7 @@ export default function MovieDetails() {
 
   const handleRemoveFromWatchlist = async (movieId) => {
     try {
-      const response = await fetch('http://localhost:5001/api/wishlist/remove', {
+      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

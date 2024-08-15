@@ -1,11 +1,28 @@
+/*****************************************************************************
+*
+WEB422 – Project
+*
+I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
+*
+No part of this assignment has been copied manually or electronically from any other source
+*
+(including web sites) or distributed to other students.
+*
+*
+Group member Names: Fatemeh Hatefi, Dhruv Sahni 
+Student IDs: 142616218, 143525228 
+Date: 08/13/2024
+*****************************************************************************/
+//front/src/app/about.js
 'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import styles from './About.module.css';
 import fatemehImg from './images/WhatsApp Image 2024-08-12 at 7.17.52 PM.jpeg';
 import dhruveImg from './images/dhruve.jpg';
 
+
+// Defines the About component that displays information about team members.
 function About() {
   return (
     <div className={styles.aboutContainer}>

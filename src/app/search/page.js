@@ -1,3 +1,18 @@
+/*****************************************************************************
+*
+WEB422 – Project
+*
+I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
+*
+No part of this assignment has been copied manually or electronically from any other source
+*
+(including web sites) or distributed to other students.
+*
+*
+Group member Names: Fatemeh Hatefi, Dhruv Sahni 
+Student IDs: 142616218, 143525228 
+Date: 08/13/2024
+*****************************************************************************/
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
@@ -17,7 +32,7 @@ const MovieSearchContent = () => {
     if (query) {
       setSearchTerm(query); // Update state with the query
       console.log('Fetching movies with query:', query);
-      fetch(`http://localhost:5001/search?query=${encodeURIComponent(query)}`)
+      fetch(`https://backrender-pzkd.onrender.com/search?query=${encodeURIComponent(query)}`)
         .then(response => {
           console.log('Response status:', response.status); // Log status
           if (!response.ok) {
@@ -39,7 +54,7 @@ const MovieSearchContent = () => {
       try {
         const email = localStorage.getItem('userEmail');
         if (email) {
-          const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
+          const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Consistent token name
@@ -64,7 +79,7 @@ const MovieSearchContent = () => {
   const handleAddToWatchlist = async (userId, movieId) => {
     try {
       console.log("Adding to Watchlist - Request Body:", { userId, movieId });
-      const response = await fetch('http://localhost:5001/api/wishlist/add', {
+      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +106,7 @@ const MovieSearchContent = () => {
   const handleRemoveFromWatchlist = async (userId, movieId) => {
     try {
       console.log("Removing from Watchlist - Request Body:", { userId, movieId });
-      const response = await fetch('http://localhost:5001/api/wishlist/remove', {
+      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,11 +160,7 @@ const MovieSearchContent = () => {
                   Rating: {movie.rating} <br />
                   Release Year: {movie.releaseYear}
                 </p>
-                {isInWatchlist ? (
-                  <button className="btn btn-danger" onClick={() => handleRemoveFromWatchlist(user._id, movie._id)}>Remove from Watchlist</button>
-                ) : (
-                  <button className="btn btn-primary" onClick={() => handleAddToWatchlist(user._id, movie._id)}>Add to Watchlist</button>
-                )}
+                
               </div>
             </div>
           );
