@@ -1,12 +1,11 @@
-//front/src/app/search/page.js
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import styles from './SearchResults.module.css';
 
-const MovieSearch = () => {
+const MovieSearchContent = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [user, setUser] = useState(null); // Add user state
@@ -126,14 +125,13 @@ const MovieSearch = () => {
             <div key={movie._id} className="card" style={{ width: '18rem' }}>
               {movie.image && (
                 <a href={`/movie/${movie._id}`}>
-                 <Image
-  src={movie.image}
-  className={styles.cardImgTop}
-  alt={movie.title}
-  width={800}    // Add the width based on your design requirements
-  height={400}   // Add the height based on your design requirements
-/>
-
+                  <Image
+                    src={movie.image}
+                    className={styles.cardImgTop}
+                    alt={movie.title}
+                    width={287}    // Add the width based on your design requirements
+                    height={400}   // Add the height based on your design requirements
+                  />
                 </a>
               )}
               <div className="card-body">
@@ -163,4 +161,10 @@ const MovieSearch = () => {
   );
 };
 
-export default MovieSearch;
+const MovieSearchPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <MovieSearchContent />
+  </Suspense>
+);
+
+export default MovieSearchPage;

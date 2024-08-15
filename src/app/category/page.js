@@ -1,11 +1,11 @@
 'use client';
-
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState} from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './CategoryPage.module.css'; // Import the CSS module
 import Image from 'next/image';
+import { Suspense } from 'react';
 
-const CategoryPage = () => {
+const CategoryContent = () => {
   const searchParams = useSearchParams(); // Access search parameters
   const category = searchParams.get('category'); // Get the query parameter from the URL
   const [movies, setMovies] = useState([]);
@@ -120,55 +120,59 @@ const CategoryPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className={styles.categoryPage}>
-        <h1>{category ? category.charAt(0).toUpperCase() + category.slice(1) : 'Movies'}</h1>
-        <div className={styles.moviesList}>
-          {movies.length > 0 ? (
-            movies.map(movie => {
-              const isInWatchlist = user?.wishlist.includes(movie._id);
+    <div className={styles.categoryPage}>
+      <h1>{category ? category.charAt(0).toUpperCase() + category.slice(1) : 'Movies'}</h1>
+      <div className={styles.moviesList}>
+        {movies.length > 0 ? (
+          movies.map(movie => {
+            const isInWatchlist = user?.wishlist.includes(movie._id);
 
-              return (
-                <div key={movie._id} className="card" style={{ width: '18rem' }}>
-                  {movie.image && (
-                    <a href={`/movie/${movie._id}`}>
-                      <Image 
-  src={movie.image} 
-  className={styles.cardImgTop} 
-  alt={movie.title} 
-  width={300} // adjust this value based on your layout
-  height={400} // adjust this value based on your layout
-  style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
-/>
-                    </a>
+            return (
+              <div key={movie._id} className="card" style={{ width: '18rem' }}>
+                {movie.image && (
+                  <a href={`/movie/${movie._id}`}>
+                    <Image 
+                      src={movie.image} 
+                      className={styles.cardImgTop} 
+                      alt={movie.title} 
+                      width={288} // adjust this value based on your layout
+                      height={400} // adjust this value based on your layout
+                      style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
+                    />
+                  </a>
+                )}
+                <div className="card-body">
+                  <a href={`/movie/${movie._id}`} passHref>
+                    <h5 className="card-title" style={{ cursor: 'pointer' }}>
+                      {movie.title} {movie.discontinued && <span>(Discontinued)</span>}
+                    </h5>
+                  </a>
+                  <p className="card-text">
+                    {movie.description} <br />
+                    Rating: {movie.rating} <br />
+                    Release Year: {movie.releaseYear}
+                  </p>
+                  {isInWatchlist ? (
+                    <button className="btn btn-danger" onClick={() => handleRemoveFromWatchlist(user._id, movie._id)}>Remove from Watchlist</button>
+                  ) : (
+                    <button className="btn btn-primary" onClick={() => handleAddToWatchlist(user._id, movie._id)}>Add to Watchlist</button>
                   )}
-                  <div className="card-body">
-                    <a href={`/movie/${movie._id}`} passHref>
-                      <h5 className="card-title" style={{ cursor: 'pointer' }}>
-                        {movie.title} {movie.discontinued && <span>(Discontinued)</span>}
-                      </h5>
-                    </a>
-                    <p className="card-text">
-                      {movie.description} <br />
-                      Rating: {movie.rating} <br />
-                      Release Year: {movie.releaseYear}
-                    </p>
-                    {isInWatchlist ? (
-                      <button className="btn btn-danger" onClick={() => handleRemoveFromWatchlist(user._id, movie._id)}>Remove from Watchlist</button>
-                    ) : (
-                      <button className="btn btn-primary" onClick={() => handleAddToWatchlist(user._id, movie._id)}>Add to Watchlist</button>
-                    )}
-                  </div>
                 </div>
-              );
-            })
-          ) : (
-            <p>No movies found for this category.</p>
-          )}
-        </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>No movies found for this category.</p>
+        )}
       </div>
-    </Suspense>
+    </div>
   );
 };
+
+const CategoryPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <CategoryContent />
+  </Suspense>
+);
 
 export default CategoryPage;

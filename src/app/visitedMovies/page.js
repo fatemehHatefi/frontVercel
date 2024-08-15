@@ -68,7 +68,7 @@ const History = () => {
   src={movie.image}
   className={styles.cardImgTop}
   alt={movie.title}
-  width={800}    // Add the width based on your design requirements
+  width={287}    // Add the width based on your design requirements
   height={400}   // Add the height based on your design requirements
 />
 
