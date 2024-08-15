@@ -12,7 +12,7 @@ const AddToWishlistButton = ({ movieId }) => {
       const userId = localStorage.getItem('userId'); // Or get from auth state
       if (!userId) throw new Error('User not logged in');
 
-      await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
+      await fetch('http://localhost:5001/api/wishlist/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, movieId }),

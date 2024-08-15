@@ -37,7 +37,7 @@ const CategoryPage = () => {
       try {
         const email = localStorage.getItem('userEmail');
         if (email) {
-          const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
+          const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include auth token if needed

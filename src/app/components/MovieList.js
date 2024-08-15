@@ -11,28 +11,35 @@ function MovieList() {
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [email, setEmail] = useState(localStorage.getItem('userEmail'));
+  const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // State to store the error message
   const router = useRouter();
   let userId = null;
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch(`https://backrender-pzkd.onrender.com/movies?page=${currentPage}&limit=4`);
-        const data = await response.json();
-        setMovies(data.movies);
-        setTotalPages(data.totalPages);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    // Check if running in the browser environment
+    if (typeof window !== 'undefined') {
+      setEmail(localStorage.getItem('userEmail'));
 
-    fetchMovies();
+      const fetchMovies = async () => {
+        try {
+          const response = await fetch(`http://localhost:5001/movies?page=${currentPage}&limit=4`);
+          const data = await response.json();
+          setMovies(data.movies);
+          setTotalPages(data.totalPages);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+      fetchMovies();
+    }
   }, [currentPage]);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!email) return; // Exit if email is not set
+
       try {
         const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
           method: 'GET',
@@ -53,7 +60,7 @@ function MovieList() {
       }
     };
 
-    if (email) {
+    if (typeof window !== 'undefined') {
       fetchUser();
     }
   }, [email]);
@@ -95,7 +102,6 @@ function MovieList() {
       console.error('Error:', error);
     }
   };
-  
 
   const handleRemoveFromWatchlist = async (movieId) => {
     try {

@@ -16,7 +16,7 @@ const MovieSearch = () => {
     if (query) {
       setSearchTerm(query); // Update state with the query
       console.log('Fetching movies with query:', query);
-      fetch(`https://backrender-pzkd.onrender.com/search?query=${encodeURIComponent(query)}`)
+      fetch(`http://localhost:5001/search?query=${encodeURIComponent(query)}`)
         .then(response => {
           console.log('Response status:', response.status); // Log status
           if (!response.ok) {
@@ -38,7 +38,7 @@ const MovieSearch = () => {
       try {
         const email = localStorage.getItem('userEmail');
         if (email) {
-          const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
+          const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include your auth token if needed
@@ -63,7 +63,7 @@ const MovieSearch = () => {
   const handleAddToWatchlist = async (userId, movieId) => {
     try {
       console.log("Adding to Watchlist - Request Body:", { userId, movieId });
-      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
+      const response = await fetch('http://localhost:5001/api/wishlist/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const MovieSearch = () => {
   const handleRemoveFromWatchlist = async (userId, movieId) => {
     try {
       console.log("Removing from Watchlist - Request Body:", { userId, movieId });
-      const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/remove', {
+      const response = await fetch('http://localhost:5001/api/wishlist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const MovieSearch = () => {
           return (
             <div key={movie.id} className="card" style={{ width: '18rem' }}>
               {movie.image && (
-                <a href={`/movie/${movie.id}`}>
+                <a href={`/movie/${movie._id}`}>
                   <img 
                     src={movie.image} 
                     className={styles.cardImgTop} 
