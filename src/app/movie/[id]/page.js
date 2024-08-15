@@ -1,18 +1,3 @@
-/*****************************************************************************
-*
-WEB422 – Project
-*
-I declare that this assignment is my own work in accordance with SenecaAcademic Policy.
-*
-No part of this assignment has been copied manually or electronically from any other source
-*
-(including web sites) or distributed to other students.
-*
-*
-Group member Names: Fatemeh Hatefi, Dhruv Sahni 
-Student IDs: 142616218, 143525228 
-Date: 08/13/2024
-*****************************************************************************/
 'use client';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -26,11 +11,10 @@ export default function MovieDetails() {
   const [user, setUser] = useState(null);
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(typeof window !== 'undefined' ? localStorage.getItem('userEmail') || '' : '');
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
-
 
   useEffect(() => {
     const fetchMovie = async (id) => {
@@ -41,7 +25,7 @@ export default function MovieDetails() {
         if (response.status === 200) {
           setMovie(response.data);
 
-          const fetchedUserId = localStorage.getItem('userEmail');
+          const fetchedUserId = typeof window !== 'undefined' ? localStorage.getItem('userEmail') : null;
           if (fetchedUserId) {
             await fetch('https://backrender-pzkd.onrender.com/history', {
               method: 'POST',
@@ -76,6 +60,7 @@ export default function MovieDetails() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!email) return;
       try {
         const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
           method: 'GET',
@@ -96,9 +81,7 @@ export default function MovieDetails() {
       }
     };
 
-    if (email) {
-      fetchUser();
-    }
+    fetchUser();
   }, [email]);
 
   if (loading) return <div>Loading...</div>;
@@ -108,12 +91,13 @@ export default function MovieDetails() {
   const handleAddToWatchlist = async (movieId) => {
     if (!user) {
       setErrorMessage('You need to log in first to add movies to your watchlist.');
+      console.log('User is not logged in or user data is not set');
       setTimeout(() => {
         router.push('/login');
       }, 3000);
       return;
     }
-
+  
     try {
       const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
         method: 'POST',
@@ -123,17 +107,17 @@ export default function MovieDetails() {
         },
         body: JSON.stringify({ userId: user._id, movieId })
       });
-
+  
       if (response.ok) {
         setUser(prevUser => ({
           ...prevUser,
           wishlist: [...prevUser.wishlist, movieId]
         }));
       } else {
-        console.error('Error adding movie to watchlist');
+        console.error('Error adding movie to watchlist:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error adding to watchlist:', error);
     }
   };
 
@@ -167,12 +151,12 @@ export default function MovieDetails() {
     <div className={styles.movieDetail}>
       <div className={styles.movieContent}>
         {movie.image && <Image 
-  src={movie.image} 
-  alt={movie.title} 
-  className={styles.movieImage} 
-  width={400}   // Add the width based on the required size
-  height={600}  // Add the height based on the required size
-/>}
+          src={movie.image} 
+          alt={movie.title} 
+          className={styles.movieImage} 
+          width={400}   // Add the width based on the required size
+          height={600}  // Add the height based on the required size
+        />}
         <div className={styles.movieDescription}>
           <h1>{movie.title}</h1>
           <p>{movie.description}</p>
