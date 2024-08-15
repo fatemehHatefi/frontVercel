@@ -8,20 +8,27 @@ const History = () => {
   const [history, setHistory] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
   let email = null;
   if (typeof window !== 'undefined') {
     email = localStorage.getItem('userEmail');
-}
-  
+  }
+
   useEffect(() => {
     const fetchUserHistory = async () => {
+      if (!email) {
+        setError('User email not found');
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
       try {
         const response = await fetch('http://localhost:5001/historyView', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Ensure consistent token usage
           },
           body: JSON.stringify({ userEmail: email })
         });
@@ -41,9 +48,7 @@ const History = () => {
       }
     };
 
-    if (email) {
-      fetchUserHistory(); // Call the fetchUserHistory function if email is present
-    }
+    fetchUserHistory(); // Call the fetchUserHistory function
   }, [email]);
 
   if (loading) return <p>Loading...</p>;
@@ -58,7 +63,12 @@ const History = () => {
             <div key={movie._id} className="card movie-item" style={{ width: '18rem' }}>
               {movie.image ? (
                 <Link href={`/movie/${movie._id}`}>
-                  <img src={movie.image} className="card-img-top" alt={movie.title} style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} />
+                  <img 
+                    src={movie.image} 
+                    className="card-img-top" 
+                    alt={movie.title} 
+                    style={{ height: '400px', objectFit: 'cover', cursor: 'pointer' }} 
+                  />
                 </Link>
               ) : (
                 <p>No image available</p>

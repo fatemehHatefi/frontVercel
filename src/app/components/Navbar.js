@@ -1,3 +1,4 @@
+//front/src/app/components/Navbar.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -12,21 +13,18 @@ const Navbar = ({ setSearchTerm }) => {
   const [userName, setUserName] = useState(null);
   const router = useRouter();
   const { pathname } = router; // Get current route path
-  let email = null;
-  let name = null;
+  //let email = null;
+  //let name = null;
   // List of categories
   const categories = ["Science Fiction & Fantasy", "Action & Adventure", "Drama & Romance", "Animation & Family"];
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      
-      email = localStorage.getItem('userEmail');
-      name = localStorage.getItem('userName');
-  }
-  
-    
-    setUserEmail(email);
-    setUserName(name);
+      const email = localStorage.getItem('userEmail');
+      const name = localStorage.getItem('userName');
+      setUserEmail(email);
+      setUserName(name);
+    }
   }, []);
 
   const handleSearch = (e) => {

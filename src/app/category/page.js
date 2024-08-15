@@ -1,3 +1,4 @@
+//front/src/app/category/page.js
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -9,7 +10,8 @@ const CategoryPage = () => {
   const category = searchParams.get('category'); // Get the query parameter from the URL
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(null); // Add user state if needed
-  let email = null;
+  const [email, setEmail] = useState(null);
+
   useEffect(() => {
     const fetchMovies = async () => {
       if (category) {
@@ -32,16 +34,15 @@ const CategoryPage = () => {
   }, [category]);
 
   useEffect(() => {
-    // Fetch user details if needed
     const fetchUser = async () => {
-      try {
-        if (typeof window !== 'undefined') {
-          email = localStorage.getItem('userEmail');
+      if (typeof window !== 'undefined') {
+        const storedEmail = localStorage.getItem('userEmail');
+        setEmail(storedEmail);
       }
       
-        
-        if (email) {
-          const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
+      if (email) {
+        try {
+          const response = await fetch(`https://backrender-pzkd.onrender.com/user?email=${encodeURIComponent(email)}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include auth token if needed
@@ -54,14 +55,14 @@ const CategoryPage = () => {
           } else {
             console.error('Failed to fetch user');
           }
+        } catch (error) {
+          console.error('Error fetching user:', error);
         }
-      } catch (error) {
-        console.error('Error fetching user:', error);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [email]);
 
   const handleAddToWatchlist = async (userId, movieId) => {
     try {

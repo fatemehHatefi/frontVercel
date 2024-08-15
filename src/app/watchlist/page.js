@@ -7,20 +7,19 @@ import styles from './watchlist.module.css'; // Import custom styles
 const Watchlist = () => {
   const [watchlist, setWatchlist] = useState([]);
   const [user, setUser] = useState(null);
-let email = null;
+  let email = null;
 
   if (typeof window !== 'undefined') {
     email = localStorage.getItem('userEmail');
-}
+  }
 
   useEffect(() => {
-    // Fetch user details based on the email
     const fetchUser = async () => {
       try {
         const response = await fetch(`http://localhost:5001/user?email=${encodeURIComponent(email)}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include your auth token if needed
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use consistent token handling
           }
         });
 
@@ -35,7 +34,7 @@ let email = null;
         const watchlistResponse = await fetch(`http://localhost:5001/api/wishlist/view?email=${encodeURIComponent(email)}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include your auth token if needed
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use consistent token handling
           }
         });
 
@@ -51,7 +50,7 @@ let email = null;
     };
 
     if (email) {
-      fetchUser(); // Call the fetchUser function if email is present
+      fetchUser();
     }
   }, [email]);
 
@@ -95,11 +94,15 @@ let email = null;
                 </h5>
               </Link>
               <p className="card-text">
-                {movie.description} <br />
-                Rating: {movie.rating} <br />
-                Release Year: {movie.releaseYear}
+                {movie.description || 'No description available'} <br />
+                Rating: {movie.rating || 'N/A'} <br />
+                Release Year: {movie.releaseYear || 'N/A'}
               </p>
-              <button className="btn btn-danger" onClick={() => handleRemoveFromWatchlist(user._id, movie._id)}>Remove from Watchlist</button>
+              {user && (
+                <button className="btn btn-danger" onClick={() => handleRemoveFromWatchlist(user._id, movie._id)}>
+                  Remove from Watchlist
+                </button>
+              )}
             </div>
           </div>
         ))

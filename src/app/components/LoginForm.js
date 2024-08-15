@@ -1,3 +1,4 @@
+// front/src/app/components/LoginForm.js
 'use client';
 
 import { useState } from 'react';
@@ -25,13 +26,14 @@ const LoginForm = () => {
       const result = await response.json();
       if (response.ok) {
         console.log('Login successful:', result.token);
+        
         if (typeof window !== 'undefined') {
           localStorage.setItem('userToken', result.token);
           localStorage.setItem('userEmail', email);
-      }
-      
-        
-        window.location.href = '/'; // Force full page reload
+        }
+
+        // You can use router.push for navigation
+        router.push('/');
       } else {
         console.error('Login error:', result.message);
         setErrorMessage(result.message || 'Failed to log in. Please try again.'); // Set error message

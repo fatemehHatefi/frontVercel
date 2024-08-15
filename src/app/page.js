@@ -2,14 +2,25 @@
 
 import Navbar from './components/Navbar';
 import MovieList from './components/MovieList';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const email = localStorage.getItem('userEmail');
+      if (email) {
+        setUserEmail(email);
+      }
+    }
+  }, []);
 
   return (
     <div>
       <h1>Welcome to the MovieVerse</h1>
+      {userEmail && <h2>Welcome, {userEmail}</h2>}
       <MovieList searchTerm={searchTerm} />
     </div>
   );

@@ -16,27 +16,27 @@ function MovieList() {
   const router = useRouter();
   let userId = null;
 
+  // Fetch email from localStorage on component mount
   useEffect(() => {
-    // Check if running in the browser environment
     if (typeof window !== 'undefined') {
       setEmail(localStorage.getItem('userEmail'));
     }
 
-      const fetchMovies = async () => {
-        try {
-          const response = await fetch(`http://localhost:5001/movies?page=${currentPage}&limit=4`);
-          const data = await response.json();
-          setMovies(data.movies);
-          setTotalPages(data.totalPages);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/movies?page=${currentPage}&limit=4`);
+        const data = await response.json();
+        setMovies(data.movies);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-      fetchMovies();
-    
+    fetchMovies();
   }, [currentPage]);
 
+  // Fetch user data based on email
   useEffect(() => {
     const fetchUser = async () => {
       if (!email) return; // Exit if email is not set
@@ -56,8 +56,8 @@ function MovieList() {
         const userData = await response.json();
         if (typeof window !== 'undefined') {
           localStorage.setItem('userName', userData.username);
-      }
-      
+        }
+
         setUser(userData);
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -76,14 +76,12 @@ function MovieList() {
   const handleAddToWatchlist = async (movieId) => {
     if (!user) {
       setErrorMessage('You need to log in first to add movies to your watchlist.'); // Set error message
-      
       setTimeout(() => {
         router.push('/login');
       }, 3000); // Delay of 3 seconds
-  
       return;
     }
-  
+
     try {
       const response = await fetch('https://backrender-pzkd.onrender.com/api/wishlist/add', {
         method: 'POST',
@@ -93,7 +91,7 @@ function MovieList() {
         },
         body: JSON.stringify({ userId, movieId })
       });
-  
+
       if (response.ok) {
         setUser(prevUser => ({
           ...prevUser,
